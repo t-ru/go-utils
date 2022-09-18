@@ -24,3 +24,11 @@ SOFTWARE.
 
 package shellcmd
 
+func RunSilent(command string, args ...string) error {
+	cmd := exec.Command(command, args...)
+	cmd.SysProcAttr = &syscall.SysProcAttr{CreationFlags: 0x08000000}
+	cmd.Stdout = nil
+	cmd.Stderr = nil
+	return cmd.Run()
+}
+

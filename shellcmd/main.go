@@ -24,6 +24,12 @@ SOFTWARE.
 
 package shellcmd
 
+import (
+	"os"
+	"os/exec"
+	"syscall"
+)
+
 func RunSilent(command string, args ...string) error {
 	cmd := exec.Command(command, args...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{CreationFlags: 0x08000000}

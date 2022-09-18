@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-package shellcmd
+package wincmd
 
 import (
 	"os"
@@ -30,7 +30,7 @@ import (
 	"syscall"
 )
 
-func RunSilent(command string, args ...string) error {
+func ExecuteSilent(command string, args ...string) error {
 	cmd := exec.Command(command, args...)
 	cmd.SysProcAttr = &syscall.SysProcAttr{CreationFlags: 0x08000000}
 	cmd.Stdout = nil
@@ -38,7 +38,7 @@ func RunSilent(command string, args ...string) error {
 	return cmd.Run()
 }
 
-func RunPassThrough(command string, args ...string) error {
+func ExecutePassThrough(command string, args ...string) error {
 	cmd := exec.Command(command, args...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout

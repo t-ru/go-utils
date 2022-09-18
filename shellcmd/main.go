@@ -38,8 +38,8 @@ func RunSilent(command string, args ...string) error {
 	return cmd.Run()
 }
 
-func RunPassThrough(name string, arg ...string) error {
-	cmd := exec.Command(name, arg...)
+func RunPassThrough(command string, args ...string) error {
+	cmd := exec.Command(command, args...)
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr

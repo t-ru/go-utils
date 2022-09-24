@@ -11,6 +11,16 @@ import (
 )
 ```
 
+## Documentation - Index
+
+- [ConvertLinebreakToUnix](#ConvertLinebreakToUnix)
+- [ConvertLinebreakToUnixReader](#ConvertLinebreakToUnixReader)
+- [ConvertLinebreakToUnixWriter](#ConvertLinebreakToUnixWriter)
+
+- [ConvertLinebreakToWindows](#ConvertLinebreakToWindows)
+- [ConvertLinebreakToWindowsReader](#ConvertLinebreakToWindowsReader)
+- [ConvertLinebreakToWindowsWriter](#ConvertLinebreakToWindowsWriter)
+
 ## Documentation
 
 ### <span id="ConvertLinebreakToUnix">ConvertLinebreakToUnix</span>

@@ -68,3 +68,38 @@ func main() {
 	fmt.Printf("%#v\n", result_err)
 }
 ```
+
+### <span id="ConvertLinebreakToUnixReader">ConvertLinebreakToUnixReader</span>
+Returns an io.Reader that converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Unix/Linux LF \n linebreaks<br>
+
+<b>Signature:</b>
+
+```go
+func ConvertLinebreakToUnixReader(r io.Reader) io.Reader
+```
+
+### <span id="ConvertLinebreakToUnixWriter">ConvertLinebreakToUnixWriter</span>
+Returns an io.Writer that converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Unix/Linux LF \n linebreaks<br>
+
+<b>Signature:</b>
+
+```go
+func ConvertLinebreakToUnixWriter(r io.Writer) io.Writer
+```
+
+### <span id="ConvertLinebreakToWindowsReader">ConvertLinebreakToWindowsReader</span>
+Returns an io.Reader that converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Windows LF \r\n linebreaks<br>
+
+<b>Signature:</b>
+
+```go
+func ConvertLinebreakToWindowsReader(r io.Reader) io.Reader
+```
+
+### <span id="ConvertLinebreakToWindowsWriter">ConvertLinebreakToWindowsWriter</span>
+Returns an io.Writer that converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Windows LF \r\n linebreaks<br>
+
+<b>Signature:</b>
+
+```go
+func ConvertLinebreakToWindowsWriter(r io.Writer) io.Writer

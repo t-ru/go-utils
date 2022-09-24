@@ -103,3 +103,53 @@ Returns an io.Writer that converts linebreaks (Windows CRLF \r\n , Mac CR \r, Un
 
 ```go
 func ConvertLinebreakToWindowsWriter(r io.Writer) io.Writer
+```
+
+<b>Example:</b>
+
+```go
+cmd := exec.Command("wsl.exe", "--exec",  "sh", "-c", "whoami; whoami; whoamiERRRR; whoami; whoami")
+cmd.Stdin = os.Stdin
+cmd.Stdout = os.Stdout
+cmd.Stderr = os.Stderr
+result := cmd.Run()
+```
+
+Result: Stdout and Stderr will be displayed correctly. Linebreaks will converted from LF to CRLF<br>
+
+```go
+cmd := exec.Command("wsl.exe", "--exec",  "sh", "-c", "whoami; whoami; whoamiERRRR; whoami; whoami")
+cmd.Stdin = os.Stdin
+cmd.Stdout = io.MultiWriter(os.Stdout, &stderrBuffer)
+cmd.Stderr = io.MultiWriter(os.Stderr, &stdoutBuffer)
+result := cmd.Run()
+```
+Result: Stdout and Stderr will not be displayed correctly. Stdout, Stderr, stdoutBuffer, stderrBuffer containing LF.
+
+```go
+cmd := exec.Command("wsl.exe", "--exec",  "sh", "-c", "whoami; whoami; whoamiERRRR; whoami; whoami")
+cmd.Stdin = os.Stdin
+cmd.Stdout = io.MultiWriter(linebreakconverter.ConvertLinebreakToWindowsWriter(os.Stdout), &stdoutBuffer)
+cmd.Stderr = io.MultiWriter(linebreakconverter.ConvertLinebreakToWindowsWriter(os.Stderr), &stderrBuffer)
+result := cmd.Run()
+```
+Result: Stdout and Stderr will displayed correctly. Stdout and Stderr containig CRLF. stdoutBuffer and stderrBuffer containing LF
+
+```go
+cmd := exec.Command("wsl.exe", "--exec",  "sh", "-c", "whoami; whoami; whoamiERRRR; whoami; whoami")
+cmd.Stdin = os.Stdin
+cmd.Stdout = linebreakconverter.ConvertLinebreakToWindowsWriter(io.MultiWriter(os.Stdout, &stdoutBuffer))
+cmd.Stderr = linebreakconverter.ConvertLinebreakToWindowsWriter(io.MultiWriter(os.Stderr, &stderrBuffer))
+result := cmd.Run()
+```
+Result: Stdout and Stderr will displayed correctly. Stdout, Stderr, stdoutBuffer and stderrBuffer containing CRLF.
+
+
+
+
+
+
+
+
+
+

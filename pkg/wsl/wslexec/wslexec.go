@@ -27,10 +27,74 @@ package wslexec
 import "errors"
 
 type options struct {
+	Distribution string
+	User         string
+	Shell        string
+	Command      string
+	Input        string
+	StdoutSilent bool
+	StderrSilent bool
 }
 
 type Option func(f *options)
 
+func Distribution(value string) Option {
+	return func(o *options) {
+		o.Distribution = value
+	}
+}
+
+func User(value string) Option {
+	return func(o *options) {
+		o.User = value
+	}
+}
+
+func Shell(value string) Option {
+	return func(o *options) {
+		o.Shell = value
+	}
+}
+
+func StdoutSilent(value bool) Option {
+	return func(o *options) {
+		o.StdoutSilent = value
+	}
+}
+
+func StderrSilent(value bool) Option {
+	return func(o *options) {
+		o.StderrSilent = value
+	}
+}
+
+func Command(value string) Option {
+	return func(o *options) {
+		o.Command = value
+	}
+}
+
+func Input(value string) Option {
+	return func(o *options) {
+		o.Input = value
+	}
+}
+
 func Run(opt ...Option) (stdout string, stderr string, retcode int, err error) {
+
+	opts := &options{
+		Distribution: "",
+		User:         "",
+		Shell:        "",
+		Command:      "",
+		Input:        "",
+		StdoutSilent: false,
+		StderrSilent: false,
+	}
+
+	for _, applyOpt := range opt {
+		applyOpt(opts)
+	}
+
 	return "", "", 1, errors.New("not implemented")
 }

@@ -27,10 +27,42 @@ package wslunregister
 import "errors"
 
 type options struct {
+	Distribution string
+	StdoutSilent bool
+	StderrSilent bool
 }
 
 type Option func(f *options)
 
+func Distribution(value string) Option {
+	return func(o *options) {
+		o.Distribution = value
+	}
+}
+
+func StdoutSilent(value bool) Option {
+	return func(o *options) {
+		o.StdoutSilent = value
+	}
+}
+
+func StderrSilent(value bool) Option {
+	return func(o *options) {
+		o.StderrSilent = value
+	}
+}
+
 func Run(opt ...Option) (stdout string, stderr string, retcode int, err error) {
+
+	opts := &options{
+		Distribution: "",
+		StdoutSilent: false,
+		StderrSilent: false,
+	}
+
+	for _, applyOpt := range opt {
+		applyOpt(opts)
+	}
+
 	return "", "", 1, errors.New("not implemented")
 }

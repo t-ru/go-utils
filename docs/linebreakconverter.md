@@ -14,7 +14,7 @@ import (
 ## Documentation
 
 ### <span id="ConvertLinebreakToUnix">ConvertLinebreakToUnix</span>
-Converts linebreaks (Windows: \r\n (CRLF), Mac: \r (CR), Unix/Linux: \n (LF)) to Unix/Linux: \n (LF) linebreaks<br>
+Converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Unix/Linux LF \n linebreaks<br>
 
 <b>Signature:</b>
 

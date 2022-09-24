@@ -1,8 +1,12 @@
 # Package linebreakconverter
 
+<div STYLE="page-break-after: always;"></div>
+
 ## Source
 
 - [linebreakconverter](../pkg/linebreakconverter/)
+
+<div STYLE="page-break-after: always;"></div>
 
 ## Usage
 ```go
@@ -10,6 +14,8 @@ import (
     "github.com/t-ru/go-utils/pkg/linebreakconverter"
 )
 ```
+
+<div STYLE="page-break-after: always;"></div>
 
 ## Documentation - Index
 
@@ -21,10 +27,12 @@ import (
 - [ConvertLinebreakToWindowsReader](#ConvertLinebreakToWindowsReader)
 - [ConvertLinebreakToWindowsWriter](#ConvertLinebreakToWindowsWriter)
 
+<div STYLE="page-break-after: always;"></div>
+
 ## Documentation
 
 ### <span id="ConvertLinebreakToUnix">ConvertLinebreakToUnix</span>
-Converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Unix/Linux LF \n linebreaks<br>
+<p>Converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Unix/Linux LF \n linebreaks</p>
 
 <b>Signature:</b>
 
@@ -52,7 +60,7 @@ func main() {
 ```
 
 ### <span id="ConvertLinebreakToWindows">ConvertLinebreakToWindows</span>
-Converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Windows LF \r\n linebreaks<br>
+<p>Converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Windows LF \r\n linebreaks</p>
 
 <b>Signature:</b>
 
@@ -80,7 +88,7 @@ func main() {
 ```
 
 ### <span id="ConvertLinebreakToUnixReader">ConvertLinebreakToUnixReader</span>
-Returns an io.Reader that converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Unix/Linux LF \n linebreaks<br>
+<p>Returns an io.Reader that converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Unix/Linux LF \n linebreaks</p>
 
 <b>Signature:</b>
 
@@ -89,7 +97,7 @@ func ConvertLinebreakToUnixReader(r io.Reader) io.Reader
 ```
 
 ### <span id="ConvertLinebreakToUnixWriter">ConvertLinebreakToUnixWriter</span>
-Returns an io.Writer that converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Unix/Linux LF \n linebreaks<br>
+<p>Returns an io.Writer that converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Unix/Linux LF \n linebreaks</p>
 
 <b>Signature:</b>
 
@@ -98,7 +106,7 @@ func ConvertLinebreakToUnixWriter(r io.Writer) io.Writer
 ```
 
 ### <span id="ConvertLinebreakToWindowsReader">ConvertLinebreakToWindowsReader</span>
-Returns an io.Reader that converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Windows LF \r\n linebreaks<br>
+<p>Returns an io.Reader that converts linebreaks (Windows CRLF \r\n , Mac CR \r, Unix/Linux LF \n) to Windows LF \r\n linebreaks</p>
 
 <b>Signature:</b>
 

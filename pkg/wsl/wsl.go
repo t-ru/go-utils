@@ -25,6 +25,8 @@ SOFTWARE.
 package wsl
 
 import (
+	"errors"
+
 	"github.com/t-ru/go-utils/pkg/wsl/wslexec"
 	"github.com/t-ru/go-utils/pkg/wsl/wslexport"
 	"github.com/t-ru/go-utils/pkg/wsl/wslimport"
@@ -37,11 +39,13 @@ func Exec(opt ...wslexec.Option) (stdout string, stderr string, retcode int, err
 }
 
 func Import(opt ...wslimport.Option) (stdout string, stderr string, retcode int, err error) {
-	return wslimport.Run(opt...)
+	return "", "", 1, errors.New("not implemented")
+	//return wslimport.Run(opt...)
 }
 
 func Export(opt ...wslexport.Option) (stdout string, stderr string, retcode int, err error) {
-	return wslexport.Run(opt...)
+	return "", "", 1, errors.New("not implemented")
+	//return wslexport.Run(opt...)
 }
 
 func Terminate(opt ...wslterminate.Option) (stdout string, stderr string, retcode int, err error) {

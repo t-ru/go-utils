@@ -24,14 +24,7 @@ SOFTWARE.
 
 package wslterminate
 
-import (
-	"bytes"
-	"io"
-	"os"
-	"os/exec"
-
-	"github.com/t-ru/go-utils/pkg/linebreakconverter"
-)
+import "github.com/t-ru/go-utils/pkg/wsl/wslbase"
 
 type options struct {
 	Distribution string
@@ -61,7 +54,10 @@ func StderrSilent(value bool) Option {
 
 func Run(opt ...Option) (stdout string, stderr string, retcode int, err error) {
 
-	opts := &options{
+	var opts *options
+	var args []string
+
+	opts = &options{
 		Distribution: "",
 		StdoutSilent: false,
 		StderrSilent: false,
@@ -71,49 +67,12 @@ func Run(opt ...Option) (stdout string, stderr string, retcode int, err error) {
 		applyOpt(opts)
 	}
 
-	var stdoutBuffer bytes.Buffer
-	var stderrBuffer bytes.Buffer
-	var cmd *exec.Cmd
-	var cmdArgs []string
-	var cmdResult error
-	var cmdStdout string
-	var cmdStderr string
-	var cmdRetcode int
-
-	cmdArgs = append(cmdArgs, "--terminate")
+	args = append(args, "--terminate")
 
 	if opts.Distribution != "" {
-		cmdArgs = append(cmdArgs, opts.Distribution)
+		args = append(args, opts.Distribution)
 	}
 
-	cmd = exec.Command("wsl.exe", cmdArgs...)
-
-	cmd.Stdin = os.Stdin
-
-	if opts.StdoutSilent {
-		cmd.Stdout = &stdoutBuffer
-	} else {
-		// os.Stdout = crlf, stdoutBuffer = lf
-		cmd.Stdout = io.MultiWriter(linebreakconverter.ConvertLinebreakToWindowsWriter(os.Stdout), &stdoutBuffer)
-		// os.Stdout = crlf, stdoutBuffer = crlf
-		//cmd.Stdout = linebreakconverter.ConvertLinebreakToWindowsWriter(io.MultiWriter(os.Stdout, &stdoutBuffer))
-	}
-
-	if opts.StderrSilent {
-		cmd.Stderr = &stderrBuffer
-	} else {
-		// os.Stdout = crlf, stderrBuffer = lf
-		cmd.Stderr = io.MultiWriter(linebreakconverter.ConvertLinebreakToWindowsWriter(os.Stderr), &stderrBuffer)
-		// os.Stderr = crlf, stderrBuffer = crlf
-		// cmd.Stderr = linebreakconverter.ConvertLinebreakToWindowsWriter(io.MultiWriter(os.Stderr, &stderrBuffer))
-	}
-
-	cmdResult = cmd.Run()
-
-	cmdStdout = stdoutBuffer.String()
-	cmdStderr = stderrBuffer.String()
-	cmdRetcode = cmd.ProcessState.ExitCode()
-
-	return cmdStdout, cmdStderr, cmdRetcode, cmdResult
+	return wslbase.WslExecute(opts.StdoutSilent, opts.StderrSilent, args...)
 
 }

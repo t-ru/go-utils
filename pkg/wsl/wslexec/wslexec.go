@@ -24,7 +24,7 @@ SOFTWARE.
 
 package wslexec
 
-import "errors"
+import "github.com/t-ru/go-utils/pkg/wsl/wslbase"
 
 type options struct {
 	Distribution string
@@ -82,7 +82,10 @@ func Input(value string) Option {
 
 func Run(opt ...Option) (stdout string, stderr string, retcode int, err error) {
 
-	opts := &options{
+	var opts *options
+	var args []string
+
+	opts = &options{
 		Distribution: "",
 		User:         "",
 		Shell:        "",
@@ -96,5 +99,22 @@ func Run(opt ...Option) (stdout string, stderr string, retcode int, err error) {
 		applyOpt(opts)
 	}
 
-	return "", "", 1, errors.New("not implemented")
+	if opts.Distribution != "" {
+		args = append(args, "--distribution", opts.Distribution)
+	}
+
+	if opts.User != "" {
+		args = append(args, "--user", opts.User)
+	}
+
+	args = append(args, "--exec")
+
+	if opts.Shell != "" {
+		args = append(args, opts.Shell, "-c")
+	}
+
+	args = append(args, opts.Command)
+
+	return wslbase.WslExecute(opts.StdoutSilent, opts.StderrSilent, args...)
+
 }

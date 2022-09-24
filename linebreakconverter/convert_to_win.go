@@ -67,14 +67,6 @@ func ConvertLinebreakToWindows(input string) (result string, n int, err error) {
 
 }
 
-type convertLinebreakToWindows struct {
-	previous byte
-	current  byte
-	next     byte
-	cr       byte
-	lf       byte
-}
-
 // ConvertLinebreakToWindowsReader returns an io.Reader that converts
 //
 //   - Windows: \r\n (CRLF)
@@ -157,6 +149,14 @@ func ConvertLinebreakToWindowsWriter(r io.Writer) io.Writer {
 		new(convertLinebreakToUnix),
 	)
 
+}
+
+type convertLinebreakToWindows struct {
+	previous byte
+	current  byte
+	next     byte
+	cr       byte
+	lf       byte
 }
 
 func (n *convertLinebreakToWindows) Transform(dst, src []byte, atEOF bool) (nDst, nSrc int, err error) {

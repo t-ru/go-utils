@@ -27,31 +27,49 @@ package linebreakconverter
 import "testing"
 
 func TestConvertLinebreakToWindows(t *testing.T) {
-	type args struct {
-		input string
-	}
 	tests := []struct {
-		name       string
-		args       args
-		wantResult string
-		wantN      int
-		wantErr    bool
+		name string
+		in   string
+		want string
 	}{
 		// TODO: Add test cases.
+		{"Test---001", "", ""},
+
+		{"Test---002", "\r\n", "\r\n"},
+		{"Test---003", "\r", "\r\n"},
+		{"Test---004", "\n", "\r\n"},
+
+		{"Test---005", "hello world\r\n", "hello world\r\n"},
+		{"Test---006", "hello world\r", "hello world\r\n"},
+		{"Test---007", "hello world\n", "hello world\r\n"},
+
+		{"Test---008", "\r\nhello world", "\r\nhello world"},
+		{"Test---009", "\rhello world", "\r\nhello world"},
+		{"Test---010", "\nhello world", "\r\nhello world"},
+
+		{"Test---011", "hello\r\nworld", "hello\r\nworld"},
+		{"Test---012", "hello\rworld", "hello\r\nworld"},
+		{"Test---013", "hello\nworld", "hello\r\nworld"},
+
+		{"Test---015", "hello,\r\n\r\nworld", "hello,\r\n\r\nworld"},
+		{"Test---016", "hello,\r\rworld", "hello,\r\n\r\nworld"},
+		{"Test---017", "hello,\n\nworld", "hello,\r\n\r\nworld"},
 	}
 	for _, tt := range tests {
+
 		t.Run(tt.name, func(t *testing.T) {
-			gotResult, gotN, err := ConvertLinebreakToWindows(tt.args.input)
-			if (err != nil) != tt.wantErr {
-				t.Errorf("ConvertLinebreakToWindows() error = %v, wantErr %v", err, tt.wantErr)
+
+			got, _, err := ConvertLinebreakToWindows(tt.in)
+
+			if err != nil {
+				t.Errorf("\ntransforming error\n   in: %q\n   err: %v", tt.in, err)
 				return
 			}
-			if gotResult != tt.wantResult {
-				t.Errorf("ConvertLinebreakToWindows() gotResult = %v, want %v", gotResult, tt.wantResult)
+
+			if got != tt.want {
+				t.Errorf("\ntransforming got <> want\n   in: %q\n   got: %q\n   want: %q", tt.in, got, tt.want)
 			}
-			if gotN != tt.wantN {
-				t.Errorf("ConvertLinebreakToWindows() gotN = %v, want %v", gotN, tt.wantN)
-			}
+
 		})
 	}
 }

@@ -59,7 +59,7 @@ func ConvertLinebreakToWindows(input string) (result string, n int, err error) {
 
 	//return transform.String(new(convertLinebreakToWindows), input)
 
-	temp, n, err := transform.String(new(toLinebreakUnix), input)
+	temp, n, err := transform.String(new(convertLinebreakToUnix), input)
 	if err != nil {
 		return temp, n, err
 	}

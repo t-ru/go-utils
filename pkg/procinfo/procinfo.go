@@ -44,10 +44,10 @@ type procInfo struct {
 	parentProcessIsGoRun bool
 }
 
-func New(pid int) *procInfo {
+func New(pid int) (pi *procInfo, err error) {
 
 	var p *process.Process
-	pi := &procInfo{}
+	pi = &procInfo{}
 
 	pi.processId = pid
 	pi.parentProcessId = os.Getppid()
@@ -62,7 +62,9 @@ func New(pid int) *procInfo {
 	pi.parentProcessCmdline, _ = p.Cmdline()
 	pi.parentProcessIsGoRun = isGoRun(pi.parentProcessName, pi.parentProcessCmdline)
 
-	return pi
+	err = nil
+
+	return
 
 }
 

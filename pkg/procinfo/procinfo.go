@@ -44,52 +44,6 @@ type procInfo struct {
 	parentProcessIsGoRun bool
 }
 
-func isGoRun(procName string, procCmdline string) bool {
-
-	switch os := runtime.GOOS; os {
-	case "windows":
-		if procName != "go.exe" {
-			return false
-		}
-	default:
-		if procName != "go" {
-			return false
-		}
-	}
-
-	// Split the Cmdline
-	//	- 	Problem:
-	//		Command Line can contain quotes
-	//		e.g."C:\Program Files\Go\bin\go.exe" run .\main.go
-	//		a normal split results in:
-	//			- field 1: "C:\Program
-	//			- field 2: Files\Go\bin\go.exe"
-	//			- field 3: run
-	//			- field 4: .\main.go
-	//	-	Solution:
-	//		csv.reader
-	//		this results in:
-	//			- field 1: "C:\Program Files\Go\bin\go.exe"
-	//			- field 2: "run"
-	//			- field 3: ".\main.go"
-	reader := csv.NewReader(strings.NewReader(procCmdline))
-	reader.Comma = ' ' // space
-	fields, _ := reader.Read()
-
-	// command "go run" has at least a length of 3 --> "go run <file(s)>"
-	if len(fields) < 3 {
-		return false
-	}
-
-	// command is "go <args>" ... but is it "go run <file(s)>" ?
-	if fields[1] != "run" {
-		return false
-	}
-
-	// command is "go run <file(s)>"
-	return true
-}
-
 func New(pid int) *procInfo {
 
 	var p *process.Process
@@ -143,4 +97,50 @@ func (pi *procInfo) ParentProcessCmdline() string {
 
 func (pi *procInfo) ParentProcessIsGoRun() bool {
 	return pi.parentProcessIsGoRun
+}
+
+func isGoRun(procName string, procCmdline string) bool {
+
+	switch os := runtime.GOOS; os {
+	case "windows":
+		if procName != "go.exe" {
+			return false
+		}
+	default:
+		if procName != "go" {
+			return false
+		}
+	}
+
+	// Split the Cmdline
+	//	- 	Problem:
+	//		Command Line can contain quotes
+	//		e.g."C:\Program Files\Go\bin\go.exe" run .\main.go
+	//		a normal split results in:
+	//			- field 1: "C:\Program
+	//			- field 2: Files\Go\bin\go.exe"
+	//			- field 3: run
+	//			- field 4: .\main.go
+	//	-	Solution:
+	//		csv.reader
+	//		this results in:
+	//			- field 1: "C:\Program Files\Go\bin\go.exe"
+	//			- field 2: "run"
+	//			- field 3: ".\main.go"
+	reader := csv.NewReader(strings.NewReader(procCmdline))
+	reader.Comma = ' ' // space
+	fields, _ := reader.Read()
+
+	// command "go run" has at least a length of 3 --> "go run <file(s)>"
+	if len(fields) < 3 {
+		return false
+	}
+
+	// command is "go <args>" ... but is it "go run <file(s)>" ?
+	if fields[1] != "run" {
+		return false
+	}
+
+	// command is "go run <file(s)>"
+	return true
 }
